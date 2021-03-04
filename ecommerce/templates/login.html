@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project </title>
+    <link rel="stylesheet" href="/static/css/uikit.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+
+    <section class="" id="test">
+        <div class="uk-grid-collapse uk-child-width-1-2@s uk-flex-middle" uk-grid>
+            <div class="uk-background-cover uk-visible@m" style="background-image: url('/static/img/login.jpg');" uk-height-viewport></div>
+            <div class="uk-padding-large">
+                <h1>Application title</h1>
+                <p>Login with your credentials</p>
+
+                <form class="uk-form-stacked" method="POST" action="{% url 'verifylogin' %}">{% csrf_token %}
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="user">Email Address</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="user" name="user" type="email" placeholder="Email">
+                        </div>
+                    </div>
+
+                    <div class="uk-margin">
+                        <label class="uk-form-label" for="pass">Password</label>
+                        <div class="uk-form-controls">
+                            <input class="uk-input" id="pass" name="pass" type="password" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="uk-text-center">
+                        <a class="uk-button uk-button-text" href="{% url 'signup' %}">Register Here if not registered!</a>
+                    </div>                          
+                    
+                    <button type="submit" class="uk-button uk-button-danger uk-width-1-1">Login</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    
+    <script src="/static/js/uikit.min.js"></script>
+    <script src="/static/js/uikit-icons.min.js"></script>
+</body>
+</html>

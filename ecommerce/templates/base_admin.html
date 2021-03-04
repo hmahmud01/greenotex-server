@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">    
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <title>Astral Corvus</title>
+    <link rel="stylesheet" href="/static/css/uikit.min.css">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"> 
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+<body>    
+    <!-- Home Page Section -->
+    <section class="main-section">
+        <div class="admin-section-top">
+            <div>
+                <div class="uk-section-secondary uk-preserve-color">
+                    <div uk-sticky>
+                        <nav class="uk-navbar-container uk-nav-color-orange" uk-navbar="mode: click;">
+                            <div class="uk-navbar-left">
+                                <a class="uk-navbar-item uk-logo logo-size uk-text-emphasis" href="dashboard.html">Shareng.biz</a>    
+                            </div>
+                            <div class="uk-navbar-right">
+                                <ul class="uk-navbar-nav uk-iconnav">
+                                    <li>
+                                        <a class="active uk-text-emphasis" uk-toggle><span class="uk-margin-small-right" uk-icon="icon: user"></span> User </a>
+                                        <div class="uk-navbar-dropdown">
+                                            <ul class="uk-nav uk-navbar-dropdown-nav uk-text-right">
+                                                <li class="uk-active"><a href="#"><span class="uk-margin-small-right" uk-icon="icon: file-text"></span> Profile</a></li>
+                                                <li><a href="#"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Logout</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>                              
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+
+            </div>
+        </div>        
+    </section>
+
+    <div uk-grid>
+        <div class="uk-width-1-6@s">
+            <div class="uk-card uk-card-secondary uk-card-body shareng-sidebar-left">                
+                <ul class="uk-nav-default uk-nav-parent-icon" uk-nav>
+                    <li class="uk-nav-header">Dashboard Navigation</li>
+                    <li><a href="{% url 'dashboard' %}"><span class="uk-margin-small-right" uk-icon="icon: thumbnails"></span> Dashboard</a></li>
+                    <li class="uk-parent">
+                        <a href="#"><span class="uk-margin-small-right" uk-icon="icon: table"></span> Product</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="{% url 'mainbuyer' %}">Main Buyer</a></li>
+                            <li><a href="{% url 'brands' %}">Brand</a></li>
+                            <li><a href="{% url 'products' %}">Products</a></li>
+                        </ul>
+                    </li>
+                    <li class="uk-parent">
+                        <a href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span> Users</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="{% url 'mainbuyer' %}">Main Buyer</a></li>
+                            <li><a href="{% url 'localbuyer' %}">Users</a></li>                            
+                        </ul>
+                    </li>            
+                    <li class="uk-parent">
+                        <a href="#"><span class="uk-margin-small-right" uk-icon="icon: users"></span> Admins</a>
+                        <ul class="uk-nav-sub">
+                            <li><a href="">Roles</a></li>
+                            <li><a href="">Admins</a></li>                            
+                        </ul>
+                    </li>            
+                    <li class="uk-nav-divider"></li>
+                    <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: home"></span> Home</a></li>
+                    <li><a href=""><span class="uk-margin-small-right" uk-icon="icon: lifesaver"></span> Help</a></li>                    
+                    <li><a href="{% url 'userlogout' %}"><span class="uk-margin-small-right" uk-icon="icon: sign-out"></span> Logout</a></li>
+                </ul>
+                <div class="uk-position-bottom uk-padding-small">                    
+                    Copyright @ Shareng.biz
+                </div>
+            </div>
+        </div>
+        
+
+        {% block content %}
+        {% endblock %}
+
+    </div>
+    
+
+
+
+    <script src="/static/js/uikit.min.js"></script>
+    <script src="/static/js/uikit-icons.min.js"></script>
+    {% block extrascripts %}
+    {% endblock %}
+</body>
+</html>

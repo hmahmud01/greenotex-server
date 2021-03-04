@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project </title>
+    <link rel="stylesheet" href="/static/css/uikit.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+
+    <section class="" id="test">
+        <div class="uk-padding-large uk-container">
+            
+            <h1>Greenotex Application signup</h1>
+            <p class="uk-h4">Create New Account</p>            
+
+            <form class="uk-form-stacked" method="POST" action="{% url 'createlocalbuyer' %}">{% csrf_token %}
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body">
+                        <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                            <div>
+                                <div>
+                                    <div class="uk-background-secondary uk-light uk-padding uk-panel">
+                                        <p class="uk-h4">Your Company Detail</p>
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="name">Your Name</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="name" name="name" type="text" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="email">Email Address</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="email" name="email" type="email" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="account">Account Number</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="account" name="account" type="text" placeholder="Account Number">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="company_name">Company Name</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="company_name" name="company_name" type="text" placeholder="Company Name">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="street_english">Street Name (English)</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="street_english" name="street_english" type="text" placeholder="Street Name (English)">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="street_chinese">Street Name (Chinese)</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="street_chinese" name="street_chinese" type="text" placeholder="Street Name (Chinese)">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="country">Country</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="country" name="country" type="text" placeholder="Country">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="city">City</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="city" name="city" type="text" placeholder="City">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="postal">Postal Code</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="postal" name="postal" type="text" placeholder="Postal Code">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="state">State/Province</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="state" name="state" type="text" placeholder="State/Province">
+                                    </div>
+                                </div>
+
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="accounting_attention_person">Accounting Attention Person</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="accounting_attention_person" name="accounting_attention_person" type="text" placeholder="Accounting Attention Person">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="accounting_email">Account Email</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="accounting_email" name="accounting_email" type="text" placeholder="Account Email">
+                                    </div>
+                                </div>  
+                
+                                
+                            </div>        
+                            <div>
+                                
+                                              
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="purchase_attention_person">Purchase Attention Person</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="purchase_attention_person" name="purchase_attention_person" type="text" placeholder="Purchase Attention Person">
+                                    </div>
+                                </div>                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="purchase_email">Purchase Email</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="purchase_email" name="purchase_email" type="text" placeholder="Purchase Email">
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="phone">Phone</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="phone" name="phone" type="text" placeholder="Phone">
+                                    </div>
+                                </div>               
+                
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="fax">Fax</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="fax" name="fax" type="text" placeholder="Fax">
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="vat">Vat no. / Tax Office name</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="vat" name="vat" type="text" placeholder="Vat no. / Tax Office name">
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="brands">Brands</label>
+                                    <div class="uk-form-controls">
+                                        <select class="uk-select" id="id_mainbuyer" name="mainbuyer_id">
+                                            {% for buyer in mainbuyer %}
+                                            <option value="{{ buyer.id }}">{{ buyer.name }}</option>
+                                            {% endfor %}                                            
+                                        </select>
+                                    </div>
+                                </div>
+                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="agent">Is Working For an Agent</label>
+                                    <div class="uk-form-controls">
+                                        <select class="uk-select" name="agent">
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="uk-background-secondary uk-light uk-padding uk-panel">
+                                        <p class="uk-h4">Your customer details</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="company_customer">Company</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="company_customer" name="company_customer" type="text" placeholder="Company">
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="contact_person">Contact Person</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="contact_person" name="contact_person" type="text" placeholder="Contact Person">
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="contact_email">Contact Email</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="contact_email" name="contact_email" type="text" placeholder="Contact Email">
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="order_number">Order Number</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="order_number" name="order_number" type="text" placeholder="Order Number">
+                                    </div>
+                                </div>
+
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="supplier_code">Supplier Code</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="supplier_code" name="supplier_code" type="text" placeholder="Supplier Code">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="uk-text-center">
+                    <a class="uk-button uk-button-secondary uk-width-1-1 uk-margin-top" href="/">Already Member? Back to Login</a>
+                </div>
+
+                <div class="uk-button-group uk-width-1-1 uk-margin">
+                    <button type="submit" class="uk-button uk-button-primary uk-width-1-1">Signup</button>
+                    <button type="button" class="uk-button uk-button-danger uk-width-1-1">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    
+    <script src="/static/js/uikit.min.js"></script>
+    <script src="/static/js/uikit-icons.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-width-expand@s">
+    <div class="uk-margin uk-padding-small">
+        <h1 class="uk-heading-bullet">Local Buyer</h1>
+        <p>Following are the Local Buyer list registered to the system</p>
+        <p>To add a new local buyer click <a class="uk-button uk-button-secondary uk-button-small" href="#modal-sections" uk-toggle>Add Local Buyer</a></p>
+        <div>
+            <table class="uk-table uk-table-justify uk-table-divider">
+                <thead>
+                    <tr>
+                        <th class="uk-width-small">Local Buyer Name</th>
+                        <th>Main Buyer Reference</th>
+                        <th>User id</th>
+                        <th>Date added</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for localbuyer in data %}                          
+                    <tr>
+                        <td>{{ localbuyer.name }}</td>
+                        <th>{{ localbuyer.company_info.brands.name }}</th>
+                        <td>{{ localbuyer.customer_detail.company }}</td>
+                        <td>{{ localbuyer.user.date_joined.date }}</td>
+                        <td>
+                            {% if localbuyer.status == False %}
+                            <a class="uk-button uk-button-default uk-button-small" href="{% url 'activatelocalbuyer' localbuyer.id %}">Activate</a>
+                            {% else %}
+                            <a class="uk-button uk-button-default uk-button-small" href="{% url 'deactivatelocalbuyer' localbuyer.id %}">De-activate</a>
+                            {% endif %}          
+                        </td>
+                    </tr> 
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>                   
+        
+
+        <div id="modal-sections" class="uk-modal-container" uk-modal>
+            <div class="uk-modal-dialog uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Add Local Buyer</h2>
+                </div>
+                <form class="uk-form-stacked">
+                    <div class="uk-modal-body">
+                        <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                            <div>
+                                <p>User Registration</p>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-select">Select</label>
+                                    <div class="uk-form-controls">
+                                        <select class="uk-select" id="form-stacked-select">
+                                            <option>Adidas</option>
+                                            <option>Puma</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Local Buyer Title</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Add A new Local Buyer">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Email</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="email" placeholder="Email">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Password</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="password" placeholder="Password">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Confirm Password</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="password" placeholder="Confirm Password">
+                                    </div>
+                                </div>  
+                            </div>  
+                            <div>
+                                <p>user Information</p>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Invoice Address</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Invoice Address">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Company Details</label>
+                                    <div class="uk-form-controls">
+                                        <textarea class="uk-textarea" rows="5" placeholder="Company Details"></textarea>
+                                    </div>
+                                </div>                                         
+                            </div>  
+                        </div>
+                                                                                    
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="button">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

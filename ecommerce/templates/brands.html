@@ -1,0 +1,69 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-width-expand@s">
+    <div class="uk-margin uk-padding-small">
+        <h1 class="uk-heading-bullet">Brands</h1>
+        <p>Following are the Brand list registered to the system under different registered Main Buyer</p>
+        <p>To add a new Brand click <a class="uk-button uk-button-secondary uk-button-small" href="#modal-sections" uk-toggle>Add Brand</a></p>
+        <div>
+            <table class="uk-table uk-table-justify uk-table-divider">
+                <thead>
+                    <tr>
+                        <th class="uk-width-small">Brand Name</th>
+                        <th>Main Buyer Reference</th>
+                        <th>Added</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for brand in brands %}
+                    <tr>
+                        <td>{{ brand.name }}</td>
+                        <th>{{ brand.mainbuyer.name }}</th>
+                        <td>{{ brand.created_at.date }}</td>
+                        <td><button class="uk-button uk-button-default uk-button-small" type="button">Detail</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>                   
+        
+
+        <div id="modal-sections" uk-modal>
+            <div class="uk-modal-dialog uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Add Brand</h2>
+                </div>
+                <form class="uk-form-stacked" method="POST" action="{% url 'savebrand' %}">{% csrf_token %}
+                    <div class="uk-modal-body">
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="name">Brand Title</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="name" name="name" type="text" placeholder="Add A new Brand">
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="form-stacked-select">Select</label>
+                            <div class="uk-form-controls">
+                                <select class="uk-select" id="name" name="mainbuyer">
+                                    {% for buyer in mainbuyer %}
+                                    <option value="{{ buyer.id }}">{{ buyer.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

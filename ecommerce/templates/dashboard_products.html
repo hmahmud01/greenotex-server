@@ -1,0 +1,133 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-width-expand@s">
+    <div class="uk-margin uk-padding-small">
+        <h1 class="uk-heading-bullet">Products</h1>
+        <p>Following are the product list registered to the system</p>
+        <p>To add a new product click <a class="uk-button uk-button-secondary uk-button-small" href="#modal-sections" uk-toggle>Add a product</a></p>
+        <div>
+            <table class="uk-table uk-table-justify uk-table-divider">
+                <thead>
+                    <tr>
+                        <th class="uk-width-small">Product Name</th>
+                        <th>Id</th>
+                        <th>Brand</th>
+                        <th>Price</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.title }}</td>
+                        <th>{{ product.id }}</th>
+                        <td>{{ product.brand.name }}</td>
+                        <td>{{ product.price }} $</td>
+                        <td><button class="uk-button uk-button-default uk-button-small" type="button">Detail</button></td>
+                    </tr>
+                    {% endfor %}                        
+                </tbody>
+            </table>
+        </div>                   
+        
+
+        <div id="modal-sections" class="uk-modal-container" uk-modal>
+            <div class="uk-modal-dialog uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Add a new Product</h2>
+                </div>
+                <form class="uk-form-stacked" id="productForm" data-brand-url="{% url 'loadbrand' %}" action="{% url 'saveproduct' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <div class="uk-modal-body">
+                        <div class="uk-grid-divider uk-child-width-expand@s" uk-grid>
+                            <div>
+                                <p>Product Information</p>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="id_mainbuyer">Select Main Buyer</label>
+                                    <div class="uk-form-controls">
+                                        <select class="uk-select" id="id_mainbuyer" name="mainbuyer_id">
+                                            {% for buyer in mainbuyer %}
+                                            <option value="{{ buyer.id }}">{{ buyer.name }}</option>
+                                            {% endfor %}                                            
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="id_brand">Select Brand</label>
+                                    <div class="uk-form-controls">
+                                        <select class="uk-select" id="id_brand" name="id_brand" required>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="title">Product Title</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="title" name="title" type="text" placeholder="Product Title">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="price">Price</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="price" name="price" type="text" placeholder="Price (input in $ currency)">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="photo">Product Image</label>
+                                    <div class="uk-form-controls" uk-form-custom="target: true">
+                                        <input type="file" name="photo">
+                                        <input class="uk-input" type="text" placeholder="Product Image" disabled>
+                                    </div>
+                                </div>
+                            </div>  
+                            <div>
+                                <p>Product Information</p>
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="form-stacked-text">Customer</label>
+                                    <div class="uk-form-controls">
+                                        <input class="uk-input" id="form-stacked-text" type="text" placeholder="Customer">
+                                    </div>
+                                </div>    
+                                <div class="uk-margin">
+                                    <label class="uk-form-label" for="description">Product Details</label>
+                                    <div class="uk-form-controls">
+                                        <textarea class="uk-textarea" rows="5" name="description" placeholder="product Details"></textarea>
+                                    </div>
+                                </div>                                         
+                            </div>  
+                        </div>
+                                                                                    
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>	
+<script>
+    $("#id_mainbuyer").change(function () {
+      var url = $("#productForm").attr("data-brand-url");
+      var mainbuyer_id = $(this).val();
+        
+      console.log(mainbuyer_id);  
+      $.ajax({                       
+        url: url,                    
+        data: {
+          'mainbuyer_id': mainbuyer_id       
+        },
+        success: function (data) {   
+          $("#id_brand").html(data); 
+        }
+      });
+
+    });
+  </script>
+{% endblock %}

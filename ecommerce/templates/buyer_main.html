@@ -1,0 +1,63 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-width-expand@s">
+    <div class="uk-margin uk-padding-small">
+        <h1 class="uk-heading-bullet">Main Buyer</h1>
+        <p>Following are the Main Buyer list registered to the system</p>
+        <p>To add a new main buyer click <a class="uk-button uk-button-secondary uk-button-small" href="#modal-sections" uk-toggle>Add Main Buyer</a></p>
+        <div>
+            <table class="uk-table uk-table-justify uk-table-divider">
+                <thead>
+                    <tr>
+                        <th class="uk-width-small">Buyer Name</th>
+                        <th>Buyer Added</th>
+                        <th>Operation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for buyer in data %}
+                    <tr>
+                        <td>{{ buyer.name }}</td>
+                        <td>{{ buyer.created_at.date }}</td>
+                        <td><button class="uk-button uk-button-default uk-button-small" type="button">Detail</button></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>                   
+        
+
+        <div id="modal-sections" uk-modal>
+            <div class="uk-modal-dialog uk-margin-auto-vertical">
+                <button class="uk-modal-close-default" type="button" uk-close></button>
+                <div class="uk-modal-header">
+                    <h2 class="uk-modal-title">Add Main Buyer</h2>
+                </div>
+                <form class="uk-form-stacked" method="POST" action="{% url 'savemainbuyer' %}">{% csrf_token %}
+                    <div class="uk-modal-body">
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="name">Main Buyer Name</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="name" name="name" type="text" placeholder="Add A new Main Buyer">
+                            </div>
+                        </div>
+
+                        <div class="uk-margin">
+                            <label class="uk-form-label" for="email">Main Buyer Email</label>
+                            <div class="uk-form-controls">
+                                <input class="uk-input" id="email" name="email" type="email" placeholder="Main Buyer Email">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-modal-footer uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+                        <button class="uk-button uk-button-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
