@@ -35,7 +35,17 @@ data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
                     <div class="uk-card-body">
                         <h3 class="uk-card-title">{{ product.title }}</h3>
                         <p>Price: {{ product.price }}$</p>
-                        <a href="{% url 'productdetail' product.id %}" class="uk-button uk-button-text">Detail</a>
+                        <!-- <a href="{% url 'productdetail' product.id %}" class="uk-button uk-button-text">Detail</a>
+                        <div class="">
+                            <button data-product="{{ product.id }}" data-action="add" class="uk-button uk-button-secondary uk-button-small update-cart">Add To Cart</button>
+                        </div>  -->
+
+                        <div>
+                            <div class="uk-button-group">
+                                <a href="{% url 'productdetail' product.id %}" class="uk-button uk-button-primary uk-button-small">Detail</a>
+                                <button data-product="{{ product.id }}" data-action="add" class="uk-button uk-button-secondary uk-button-small update-cart">Add To Cart</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

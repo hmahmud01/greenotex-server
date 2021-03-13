@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+data-src="/static/img/banner.jpg"
+data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
+<h1>Products</h1>
+</div>
+
+
+<div class="uk-container uk-margin main-content">
+<div uk-grid>            
+    {% include 'userInfo.html' %}
+    <div class="uk-width-2-3">
+        <div class="uk-child-width-1-1@s">
+            <p class="uk-text-lead">Your Cart</p>
+            <h5>Items: <strong>{{order.get_cart_items}}</strong></h5>
+			<h5>Total:<strong> $ {{order.get_cart_total|floatformat:2}}</strong></h5>
+            
+            <div class="uk-overflow-auto">
+                <table class="uk-table uk-table-hover uk-table-middle uk-table-divider">
+                    <thead>
+                        <tr>
+                            <th class="uk-table-shrink"></th>
+                            <th class="">Items</th>
+                            <th class="">Price</th>
+                            <th class="uk-width-small">Quantity</th>
+                            <th class="uk-table-shrink uk-text-nowrap">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img class="uk-preserve-width" src="/static/img/banner.jpg" width="40" alt=""></td>
+                            <td><p>Product Name</p></td>
+                            <td><p>Price</p></td>
+                            <td><p class="quantity">Qty</p>
+                                <div class="uk-margin-small">
+                                    <div class="uk-button-group quantity">
+                                        <button data-product="productid" data-action="add" class="uk-button uk-button-secondary uk-button-small update-cart">+</button>
+                                        <button data-product="productid" data-action="remove" class="uk-button uk-button-danger uk-button-small update-cart">-</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="uk-text-nowrap">$ price</td>
+                        </tr>
+                        {% for item in items %}
+                        <tr>
+                            <td><img class="uk-preserve-width" src="/media/{{ item.product.photo }}" width="40" alt=""></td>
+                            <td><p>{{item.product.name}}</p></td>
+                            <td><p>{{item.product.price}}</p></td>
+                            <td><p class="quantity">{{item.quantity}}</p>
+                                <div class="uk-margin-small">
+                                    <div class="uk-button-group quantity">
+                                        <button data-product="{{item.product.id}}" data-action="add" class="uk-button uk-button-secondary uk-button-small update-cart">+</button>
+                                        <button data-product="{{item.product.id}}" data-action="remove" class="uk-button uk-button-danger uk-button-small update-cart">-</button>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="uk-text-nowrap">$ {{item.get_total}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>   
+            <a class="uk-button uk-button-primary" href="{% url 'checkout' %}">Checkout</a>  
+            <a class="uk-button uk-button-secondary" href="/">Continue Shopping</a>       
+        </div>                
+    </div>
+</div>
+
+</div>
+
+{% endblock %}

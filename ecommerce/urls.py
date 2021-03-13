@@ -28,6 +28,9 @@ urlpatterns = [
     path('savebrand/', views.savebrand, name="savebrand"),
     path('ajax/load-brand/', views.loadbrand, name='loadbrand'),
     path('saveproduct/', views.saveproduct, name='saveproduct'),
+    path('update_item/', views.updateItem, name='update_item'),
+    path('cart/', views.cart, name="cart"),
+	path('checkout/', views.checkout, name="checkout"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

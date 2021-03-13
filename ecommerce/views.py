@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 
+import json
 from ecommerce.models import MainBuyer, Brand, Product, CompanyInfo, CustomerDetail, Localbuyer
+from ecommerce.models import Order, OrderItems, ShippingAddress
+from .utils import cartData
 
 @login_required(login_url="/login/")
 def home(request):
@@ -13,16 +17,19 @@ def home(request):
         localbuyer_brand_id = localbuyer.company_info.brands.id        
         mainbuyer = MainBuyer.objects.get(id=localbuyer_brand_id)
         data = mainbuyer
-    return render(request, 'index.html', {'data': data})
+        cartItems = Order.get_cart_items
+    return render(request, 'index.html', {'data': data, 'cartItems': cartItems})
 
 @login_required(login_url="/login/")
 def categories(request):        
     brands = Brand.objects.filter(mainbuyer_id=1)    
-    return render(request, 'categories.html', {'brands': brands})
+    cartItems = Order.get_cart_items
+    return render(request, 'categories.html', {'brands': brands, 'cartItems': cartItems})
 
 def filteredCategory(request, cid):
     brands = Brand.objects.filter(mainbuyer_id=cid)    
-    return render(request, 'categories.html', {'brands': brands})
+    cartItems = Order.get_cart_items
+    return render(request, 'categories.html', {'brands': brands, 'cartItems': cartItems})
 
 def login(request):
     data = ""
@@ -130,7 +137,8 @@ def userLogout(request):
 @login_required(login_url="/login/")
 def productlist(request,bid):
     products = Product.objects.filter(brand_id=bid)
-    return render(request, 'productlist.html', {'products': products})
+    cartItems = Order.get_cart_items
+    return render(request, 'productlist.html', {'products': products, 'cartItems': cartItems})
 
 @login_required(login_url="/login/")
 def productdetail(request, pid):
@@ -138,7 +146,8 @@ def productdetail(request, pid):
     price_usd = product.price
     price_rmb = price_usd * 6.47
     price_bdt = price_usd * 84.80
-    return render(request, 'productdetail.html', {'product': product, 'price_usd': price_usd, 'price_rmb':price_rmb, 'price_bdt': price_bdt})
+    cartItems = Order.get_cart_items
+    return render(request, 'productdetail.html', {'product': product, 'price_usd': price_usd, 'price_rmb':price_rmb, 'price_bdt': price_bdt, 'cartItems': cartItems})
 
 # Dashboard views
 @login_required(login_url="/login/")
@@ -215,6 +224,48 @@ def saveproduct(request):
     product.save()
 
     return redirect('products')
+
+def cart(request):
+	data = cartData(request)
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	context = {'items':items, 'order':order, 'cartItems':cartItems}    
+	return render(request, 'cart.html', context)
+
+def checkout(request):
+	data = cartData(request)	
+	cartItems = data['cartItems']
+	order = data['order']
+	items = data['items']
+	context = {'items':items, 'order':order, 'cartItems':cartItems}
+	return render(request, 'checkout.html', context)
+
+def updateItem(request):
+    data = json.loads(request.body)
+    productId = data['productId']
+    action = data['action']
+
+    print('Action : ', action)
+    print('productId : ', productId)
+
+    customer = request.user.localbuyer
+    product = Product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+    orderItem, created = OrderItems.objects.get_or_create(order=order, product=product)
+    
+    if action == 'add':
+        orderItem.quantity = (orderItem.quantity + 1)
+    elif action == 'remove':
+        orderItem.quantity = (orderItem.quantity - 1)
+
+    orderItem.save()
+
+    if orderItem.quantity <= 0:
+        orderItem.delete()
+
+    return JsonResponse('Item was added', safe=False)
 
 
 
