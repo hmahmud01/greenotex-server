@@ -30,24 +30,10 @@ data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><img class="uk-preserve-width" src="/static/img/banner.jpg" width="40" alt=""></td>
-                            <td><p>Product Name</p></td>
-                            <td><p>Price</p></td>
-                            <td><p class="quantity">Qty</p>
-                                <div class="uk-margin-small">
-                                    <div class="uk-button-group quantity">
-                                        <button data-product="productid" data-action="add" class="uk-button uk-button-secondary uk-button-small update-cart">+</button>
-                                        <button data-product="productid" data-action="remove" class="uk-button uk-button-danger uk-button-small update-cart">-</button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="uk-text-nowrap">$ price</td>
-                        </tr>
                         {% for item in items %}
                         <tr>
                             <td><img class="uk-preserve-width" src="/media/{{ item.product.photo }}" width="40" alt=""></td>
-                            <td><p>{{item.product.name}}</p></td>
+                            <td><p>{{item.product.title}}</p></td>
                             <td><p>{{item.product.price}}</p></td>
                             <td><p class="quantity">{{item.quantity}}</p>
                                 <div class="uk-margin-small">
