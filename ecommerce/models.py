@@ -72,6 +72,25 @@ class Localbuyer(models.Model):
     def __str__(self):
         return self.status
 
+class DelivaryAddress(models.Model):
+    user = models.ForeignKey(Localbuyer, on_delete = models.CASCADE)
+    street = models.CharField(max_length=128, null=True, blank=True)
+    city = models.CharField(max_length=128, null=True, blank=True)
+    zipcode = models.CharField(max_length=128, null=True, blank=True)
+    country = models.CharField(max_length=128, null=True, blank=True)
+
+    def __str__(self):
+        return self.id
+
+class BillingAddress(models.Model):
+    user = models.ForeignKey(Localbuyer, on_delete = models.CASCADE)
+    street = models.CharField(max_length=128, null=True, blank=True)
+    city = models.CharField(max_length=128, null=True, blank=True)
+    zipcode = models.CharField(max_length=128, null=True, blank=True)
+    country = models.CharField(max_length=128, null=True, blank=True)
+
+    def __str__(self):
+        return self.id
 
 class Order(models.Model):
     customer = models.ForeignKey(Localbuyer, on_delete=models.SET_NULL, null=True, blank=True)
@@ -127,4 +146,4 @@ class ShippingAddress(models.Model):
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.address'
+        return self.address
