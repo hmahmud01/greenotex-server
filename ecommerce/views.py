@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 import json
 from ecommerce.models import MainBuyer, Brand, Product, CompanyInfo, CustomerDetail, Localbuyer
-from ecommerce.models import Order, OrderItems, ShippingAddress
+from ecommerce.models import Order, OrderItems, ShippingAddress, DelivaryAddress, BillingAddress
 from .utils import cartData
 
 @login_required(login_url="/login/")
@@ -19,6 +19,44 @@ def home(request):
         data = mainbuyer
         cartItems = Order.get_cart_items
     return render(request, 'index.html', {'data': data, 'cartItems': cartItems})
+
+@login_required
+def addresses(request):
+    delivery = DelivaryAddress.objects.all()
+    billing = BillingAddress.objects.all()
+    return render(request, 'addresses.html', {'delivery': delivery, 'billing': billing})
+
+@login_required
+def addDeliveryAddress(request):
+    post_data = request.POST
+    user = request.user
+    buyer = Localbuyer.objects.get(user_id=user.id)
+    address = DelivaryAddress(
+        user = buyer,
+        street = post_data['street'],
+        city = post_data['city'],
+        zipcode = post_data['zipcode'],
+        country = post_data['country'],
+    )
+
+    address.save()
+    return redirect('addresses')
+
+@login_required
+def addBillingAddress(request):
+    post_data = request.POST
+    user = request.user
+    buyer = Localbuyer.objects.get(user_id=user.id)
+    address = BillingAddress(
+        user = buyer,
+        street = post_data['street'],
+        city = post_data['city'],
+        zipcode = post_data['zipcode'],
+        country = post_data['country'],
+    )
+
+    address.save()
+    return redirect('addresses')
 
 @login_required(login_url="/login/")
 def categories(request):        
