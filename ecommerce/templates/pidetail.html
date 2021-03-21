@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="uk-height-medium uk-flex uk-flex-center uk-flex-middle uk-background-cover uk-light"
+data-src="/static/img/banner.jpg"
+data-sizes="(min-width: 650px) 650px, 100vw" uk-img>
+    <h1>PI Detail</h1>
+</div>
+
+
+<div class="uk-container uk-margin main-content">
+    <div uk-grid>            
+        <div class="uk-width-1-3">                
+            <div class="uk-card uk-card-default uk-card-body">
+                <div class="uk-card-badge uk-label">0</div>
+                <h3 class="uk-card-title">Your Cart</h3>
+                <p>Currently Nothing Added</p>
+                <p><span class="uk-margin-small-right" uk-icon="cart"></span><a class="uk-button uk-button-text" href="{% url 'orderhistory' %}">History of purchase</a></p>
+                <p><span class="uk-margin-small-right" uk-icon="info"></span><a class="uk-button uk-button-text" href="#">Profile</a></p>
+                <p><span class="uk-margin-small-right" uk-icon="home"></span><a class="uk-button uk-button-text" href="{% url 'addresses' %}">Addresses</a></p>                
+            </div>            
+        </div>
+        <div class="uk-width-2-3">
+            <h3 class="uk-heading-line"><span>Order Containing Pi</span></h3>
+            <div class="uk-margin">
+                <p class="uk-text-meta">Below is the list given for your Pi list created from your orders</p>
+                <a class="uk-button uk-button-small uk-button-default" href="{% url 'picreate' %}" uk-toggle>Create PI</a>  
+            </div>
+            
+
+            <div class="uk-child-width-1-1@s" uk-grid>
+                <div>
+                    <div class="uk-card uk-card-default uk-card-hover uk-card-body uk-margin">
+                        <table class="uk-table uk-table-justify uk-table-divider">
+                            <thead>
+                                <tr>
+                                    <th class="uk-width-small">PI Id</th>
+                                    <th>Order Id</th>
+                                    <th>Date Ordered</th>                 
+                                    <th>Total Items Ordered</th>                                                       
+                                    <th>Total Cost</th>
+                                  </tr>
+                            </thead>
+                            <tbody>
+                                {% for pi in pidetails %}
+                                <tr>
+                                    <td>{{ pi.pi.transaction_id }}</td>
+                                    <td><a href="{% url 'orderdetail' pi.order.id %}">{{ pi.order.transaction_id }}</a></td>
+                                    <td>{{ pi.order.date_ordered }}</td>                                                                   
+                                    <td>{{ pi.order.get_cart_items }}</td>                   
+                                    <td>{{ pi.order.get_cart_total }} $</td>                   
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

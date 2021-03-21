@@ -97,6 +97,7 @@ class Order(models.Model):
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False)
     transaction_id = models.CharField(max_length=128, null=True)
+    pistatus = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return str(self.id)
@@ -143,7 +144,23 @@ class ShippingAddress(models.Model):
     city = models.CharField(max_length=200, null=True)
     state= models.CharField(max_length=200, null=True)
     zipcode = models.CharField(max_length=200, null=True)
+    country = models.CharField(max_length=32, null=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.address
+
+class PiList(models.Model):    
+    user = models.ForeignKey(Localbuyer, related_name="pi_user", on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+    transaction_id = models.CharField(max_length=32, null=True, blank=True)
+
+    def __str__(self):
+        return self.transaction_id
+
+class PiOrders(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    pi = models.ForeignKey(PiList, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.id

@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 import json
 from ecommerce.models import MainBuyer, Brand, Product, CompanyInfo, CustomerDetail, Localbuyer
 from ecommerce.models import Order, OrderItems, ShippingAddress, DelivaryAddress, BillingAddress
+from ecommerce.models import PiList, PiOrders
 from .utils import cartData
 
 @login_required(login_url="/login/")
@@ -306,4 +307,76 @@ def updateItem(request):
     return JsonResponse('Item was added', safe=False)
 
 
+def processOrder(request):
+    post_data = request.POST
+    print(post_data)
+    order_id = post_data['order']
+    order = Order.objects.get(id=order_id)
+    order.complete = True
+    order.transaction_id = "greenotexorder"+str(order.id)
+    order.save()
 
+    shipping = ShippingAddress(
+        address = post_data['address'],
+        city = post_data['city'],
+        state = post_data['state'],
+        zipcode = post_data['zipcode'],
+        country = post_data['country'],
+        order = order,
+        customer = request.user.localbuyer
+    )
+
+    shipping.save()
+
+    return redirect('checkout')    
+
+def orderhistory(request):
+    customer = request.user.localbuyer
+    orders = Order.objects.filter(customer_id=customer.id).filter(complete=True) 
+    return render(request, 'orderhistory.html', {'orders': orders})
+
+def orderdetail(request, oid):
+    order = Order.objects.get(id=oid)
+    orderitems = OrderItems.objects.filter(order_id=oid)
+    shipping = ShippingAddress.objects.get(order_id=oid)
+    return render(request, 'orderdetail.html', {'order': order, 'orderitems':orderitems, 'shipping': shipping})
+
+def pilist(request):
+    user = request.user.localbuyer
+    pilist = PiList.objects.filter(user_id=user.id)
+    return render(request, 'pilist.html', {'pilist': pilist})
+
+def detailpilist(request, pid):
+    pidetails = PiOrders.objects.filter(pi_id=pid)
+    return render(request, 'pidetail.html', {'pidetails': pidetails})
+
+def createpi(request):
+    customer = request.user.localbuyer
+    orders = Order.objects.filter(customer_id=customer.id).filter(complete=True) 
+    return render(request, 'picreate.html', {'orders': orders})
+
+def savepi(request):
+    post_data = request.POST
+    orders = post_data.getlist('piorders')
+    user = request.user.localbuyer
+    pi = PiList(
+        user=user
+    )
+    pi.save()
+    pid = pi.id
+    pi.transaction_id = "greenPi"+str(pid)
+    pi.save()
+
+    for order_id in orders:
+        order = Order.objects.get(id=order_id)
+        order.pistatus = True
+        order.save()
+        
+        piorder = PiOrders(
+            order = order,
+            pi = pi
+        )
+        piorder.save()
+
+
+    return redirect('picreate')
