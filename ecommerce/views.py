@@ -327,7 +327,6 @@ def processOrder(request):
     )
 
     shipping.save()
-
     return redirect('checkout')    
 
 def orderhistory(request):
