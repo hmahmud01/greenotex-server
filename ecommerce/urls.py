@@ -31,9 +31,16 @@ urlpatterns = [
     path('update_item/', views.updateItem, name='update_item'),
     path('cart/', views.cart, name="cart"),
 	path('checkout/', views.checkout, name="checkout"),
+    path('orderhistory/', views.orderhistory, name="orderhistory"),
+    path('orderdetail/<int:oid>/', views.orderdetail, name="orderdetail"),
+    path('process_order/', views.processOrder, name="process_order"),
     path('addresses/', views.addresses, name="addresses"),
     path('adddeliveryaddress/', views.addDeliveryAddress, name="adddeliveryaddress"),
-    path('addbillingaddress/', views.addBillingAddress, name="addbillingaddress"),
+    path('addbillingaddress/', views.addBillingAddress, name="addbillingaddress"),   
+    path('pilist/', views.pilist, name="pilist"),
+    path('pidetail/<int:pid>/', views.detailpilist, name="pidetail"),
+    path('picreate/', views.createpi, name="picreate"),
+    path('savepi/', views.savepi, name="savepi"),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
